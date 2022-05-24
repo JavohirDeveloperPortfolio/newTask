@@ -15,10 +15,10 @@ import uz.general.generaltask.service.AttachmentService;
 @RequestMapping("/api/attachment")
 @RequiredArgsConstructor
 public class AttachmentController {
-//    private final AttachmentService attachmentService;
-//
-//    @PostMapping
-//    public ResponseEntity<Attachment> upload(@RequestParam("file") MultipartHttpServletRequest file){
-//        return ResponseEntity.ok(attachmentService.uploadAttachment(file));
-//    }
+    private final AttachmentService attachmentService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<Long> upload(@RequestParam("file") MultipartFile file){
+        return ResponseEntity.ok(attachmentService.uploadAttachment(file).getId());
+    }
 }

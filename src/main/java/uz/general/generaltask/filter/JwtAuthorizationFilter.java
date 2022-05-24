@@ -20,7 +20,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         //if user try to authenticate, there is no need to authorize it
-        if (request.getServletPath().equals("/api/user/register") || request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/user/refresh")){
+        if (request.getServletPath().equals("/swagger-ui.html") || request.getServletPath().equals("/api/user/signUp") || request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/user/refresh")){
             filterChain.doFilter(request, response);
             return;
         }

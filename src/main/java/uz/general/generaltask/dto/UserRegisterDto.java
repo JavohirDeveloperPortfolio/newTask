@@ -15,4 +15,5 @@ public class UserRegisterDto {
     private String email;
     private String phoneNumber;
     private String status;
+    private Long attachmentId;
 }

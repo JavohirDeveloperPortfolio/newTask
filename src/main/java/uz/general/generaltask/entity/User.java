@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -64,11 +65,14 @@ public class User extends BaseEntity implements UserDetails {
         return enabled;
     }
 
-    public User(String name, String username, String password, String email, String phoneNumber) {
+    public User(String name, String username, String password, String email, String phoneNumber,String status, List<Role> roles, Attachment attachment) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.roles = roles;
+        this.attachment = attachment;
     }
 }

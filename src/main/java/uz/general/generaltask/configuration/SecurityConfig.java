@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/api/user/refresh","/api/user/register","/api/attachment").permitAll()
+                .antMatchers("/api/login", "/api/user/refresh","/api/user/signUp","swagger-ui.html").permitAll()
                 .anyRequest()
                 .authenticated();
 
