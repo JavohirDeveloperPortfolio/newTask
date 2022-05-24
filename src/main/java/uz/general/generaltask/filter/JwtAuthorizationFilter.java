@@ -20,27 +20,34 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         //if user try to authenticate, there is no need to authorize it
-        if (request.getServletPath().equals("/swagger-ui.html") || request.getServletPath().equals("/api/user/signUp") || request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/user/refresh")){
+        if (request.getServletPath().equals("/api/user/signUp") || request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/user/refresh")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = JwtUtil.getTokenFromRequestHeader(request, response);
+        if (token != null) {
 
-        //checking validation
-        DecodedJWT decodedJWT = JwtUtil.validateToken(token, response);
-        if (decodedJWT == null){
-            return;
+
+            //checking validation
+            DecodedJWT decodedJWT = JwtUtil.validateToken(token, response);
+            if (decodedJWT == null){
+
+                filterChain.doFilter(request, response);
+                return;
+            }
+            String username = decodedJWT.getSubject();
+            String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                    username,
+                    null,
+                    Arrays.stream(roles).map(SimpleGrantedAuthority::new).toList()
+            ));
+
         }
 
-        String username = decodedJWT.getSubject();
-        String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                username,
-                null,
-                Arrays.stream(roles).map(SimpleGrantedAuthority::new).toList()
-        ));
 
         filterChain.doFilter(request, response);
     }

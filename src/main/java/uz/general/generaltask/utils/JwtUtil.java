@@ -64,8 +64,8 @@ public abstract class JwtUtil {
 
         //checking header is null or not to start with Bearer
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            new ObjectMapper().writeValue(response.getOutputStream(), "Token is not found");
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            new ObjectMapper().writeValue(response.getOutputStream(), "Token is not found");
             return null;
         }
 
