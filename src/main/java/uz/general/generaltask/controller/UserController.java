@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import uz.general.generaltask.dto.ChangeStatusDto;
 import uz.general.generaltask.dto.UserRegisterDto;
 import uz.general.generaltask.dto.dao.ChangeStatusDao;
+import uz.general.generaltask.dto.dao.UserStatusStatisticsDao;
 import uz.general.generaltask.entity.Attachment;
 import uz.general.generaltask.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
@@ -117,6 +118,12 @@ public class UserController {
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id){
         return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+    @GetMapping("/statistics")
+    public ResponseEntity<UserStatusStatisticsDao> getStatistics(){
+        return ResponseEntity.ok(userService.getStatistics());
     }
 
     @PostMapping("/refresh")

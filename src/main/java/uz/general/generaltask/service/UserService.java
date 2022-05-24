@@ -3,6 +3,7 @@ package uz.general.generaltask.service;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import uz.general.generaltask.dto.ChangeStatusDto;
 import uz.general.generaltask.dto.dao.ChangeStatusDao;
+import uz.general.generaltask.dto.dao.UserStatusStatisticsDao;
 import uz.general.generaltask.utils.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +40,17 @@ public class UserService{
 
     public ChangeStatusDao changeStatus(ChangeStatusDto statusDto){
         User user = getUser(statusDto.getId());
-        user.setStatus(statusDto.getStatus());
-        userRepository.save(user);
         ChangeStatusDao statusDao = new ChangeStatusDao();
         statusDao.setOldStatus(user.getStatus());
         statusDao.setUserId(user.getId());
         statusDao.setNewStatus(statusDto.getStatus());
+        user.setStatus(statusDto.getStatus());
+        userRepository.save(user);
         return statusDao;
     }
 
     public Long saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user).getId();
     }
 
@@ -117,6 +119,14 @@ public class UserService{
 
     public User checkPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber).get();
+    }
+
+    public UserStatusStatisticsDao getStatistics() {
+        UserStatusStatisticsDao userStatusStatisticsDao = new UserStatusStatisticsDao();
+        userStatusStatisticsDao.setCountOnline(userRepository.findAllActiveUsers());
+        userStatusStatisticsDao.setCountOffline(userRepository.findAllInactiveUsers());
+        userStatusStatisticsDao.setCountUndefined(userRepository.findAllUndefinedUsers());
+        return userStatusStatisticsDao;
     }
 }
 

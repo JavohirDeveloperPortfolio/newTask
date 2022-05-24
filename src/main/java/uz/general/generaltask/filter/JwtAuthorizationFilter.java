@@ -28,7 +28,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String token = JwtUtil.getTokenFromRequestHeader(request, response);
         if (token != null) {
 
-
             //checking validation
             DecodedJWT decodedJWT = JwtUtil.validateToken(token, response);
             if (decodedJWT == null){
@@ -46,8 +45,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             ));
 
         }
-
-
 
         filterChain.doFilter(request, response);
     }

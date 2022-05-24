@@ -1,6 +1,11 @@
 package uz.general.generaltask.service;
 
+import io.github.classgraph.Resource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uz.general.generaltask.entity.Attachment;
@@ -8,6 +13,7 @@ import uz.general.generaltask.repository.AttachmentRepository;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,4 +66,5 @@ public class AttachmentService {
     public Attachment getAttachment(Long id){
         return attachmentRepository.findById(id).get();
     }
+
 }

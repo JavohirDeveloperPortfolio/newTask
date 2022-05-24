@@ -31,8 +31,8 @@ public class GeneralTaskApplication {
             userService.saveRole(new Role("ROLE_MANAGER"));
             userService.saveRole(new Role( "ROLE_ADMIN"));
 
-            userService.saveUser(new User("Admin","admin","root","admin@admin.uz","+998933453368","online",new ArrayList<>(),null,true));
-            userService.saveUser(new User("Manager","manager","root","manager@admin.uz","+998933453368","online",new ArrayList<>(),null,true));
+            userService.saveUser(new User("Admin","admin","root","admin@admin.uz","+998933453368","online",new ArrayList<>(),null));
+            userService.saveUser(new User("Manager","manager","root","manager@admin.uz","+998933453368","online",new ArrayList<>(),null));
 
             userService.addRoleToUser("admin","ROLE_ADMIN");
             userService.addRoleToUser("manager","ROLE_MANAGER");
