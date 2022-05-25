@@ -4,7 +4,7 @@
 
 Server API (JSON HTTP API)
 
-Development tools: Java Framework: Play Framework  или Spring boot 
+Development tools: Java Framework: Spring boot 
 
 DBMS: Postgresql
 
